@@ -13,22 +13,28 @@ function App() {
   return (
     <div
       style={{
-        textAlign: "center",
-        marginTop: "30px",
+        minHeight: "100vh",
+        backgroundColor: "#f4f6f9",
+        padding: "30px",
         fontFamily: "Arial",
       }}
     >
 
       <Header />
 
-      {/* Home */}
+      {/* HOME */}
       {page === "home" && (
 
-        <div>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "50px",
+          }}
+        >
 
           <Button
             text="Login"
-            color="blue"
+            color="#2563eb"
             onClick={() =>
               setPage("login")
             }
@@ -36,7 +42,7 @@ function App() {
 
           <Button
             text="Register"
-            color="green"
+            color="#16a34a"
             onClick={() =>
               setPage("register")
             }
@@ -45,7 +51,7 @@ function App() {
         </div>
       )}
 
-      {/* Login */}
+      {/* LOGIN */}
       {page === "login" && (
 
         <Login
@@ -59,7 +65,7 @@ function App() {
 
       )}
 
-      {/* Register */}
+      {/* REGISTER */}
       {page === "register" && (
 
         <Register
@@ -70,7 +76,7 @@ function App() {
 
       )}
 
-      {/* Dashboard */}
+      {/* DASHBOARD */}
       {page === "dashboard" && (
         <Dashboard />
       )}
