@@ -1,11 +1,38 @@
 function StudentList(props) {
 
+  // =====================================
+  // Empty State
+  // =====================================
+  if (props.students.length === 0) {
+
+    return (
+
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: "40px",
+          color: "gray",
+        }}
+      >
+
+        <h2>No Students Found</h2>
+
+        <p>
+          Add students to display here
+        </p>
+
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
+        gap: "20px",
+        marginTop: "30px",
       }}
     >
 
@@ -15,48 +42,76 @@ function StudentList(props) {
           key={student.id}
           style={{
             backgroundColor: "white",
-            width: "250px",
-            margin: "15px",
+            width: "280px",
             padding: "20px",
             borderRadius: "12px",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+            boxShadow:
+              "0 4px 12px rgba(0,0,0,0.1)",
+            transition: "0.3s",
           }}
         >
 
-          <h2>{student.name}</h2>
-
-          <p>{student.course}</p>
-
-          <button
-            onClick={() =>
-              props.setEditStudent(student)
-            }
+          {/* Student Name */}
+          <h2
             style={{
-              marginRight: "10px",
-              padding: "8px 12px",
-              backgroundColor: "#f59e0b",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
+              color: "#2563eb",
+              marginBottom: "10px",
             }}
           >
-            Edit
-          </button>
+            {student.name}
+          </h2>
 
-          <button
-            onClick={() =>
-              props.deleteStudent(student.id)
-            }
+          {/* Course */}
+          <p
             style={{
-              padding: "8px 12px",
-              backgroundColor: "#dc2626",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
+              color: "gray",
+              marginBottom: "20px",
             }}
           >
-            Delete
-          </button>
+            {student.course}
+          </p>
+
+          {/* Buttons */}
+          <div>
+
+            {/* Edit */}
+            <button
+              onClick={() =>
+                props.setEditStudent(student)
+              }
+              style={{
+                padding: "10px 15px",
+                marginRight: "10px",
+                backgroundColor: "#f59e0b",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              Edit
+            </button>
+
+            {/* Delete */}
+            <button
+              onClick={() =>
+                props.deleteStudent(student.id)
+              }
+              style={{
+                padding: "10px 15px",
+                backgroundColor: "#dc2626",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              Delete
+            </button>
+
+          </div>
 
         </div>
 

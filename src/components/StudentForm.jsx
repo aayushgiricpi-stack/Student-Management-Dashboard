@@ -2,9 +2,20 @@ import { useState, useEffect } from "react";
 
 function StudentForm(props) {
 
+  // =====================================
+  // Input States
+  // =====================================
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
 
+  // =====================================
+  // Error State
+  // =====================================
+  const [error, setError] = useState("");
+
+  // =====================================
+  // Load Edit Data
+  // =====================================
   useEffect(() => {
 
     if (props.editStudent) {
@@ -16,8 +27,54 @@ function StudentForm(props) {
 
   }, [props.editStudent]);
 
+  // =====================================
+  // Handle Submit
+  // =====================================
   const handleSubmit = () => {
 
+    // Clear old error
+    setError("");
+
+    // =====================================
+    // Validation
+    // =====================================
+
+    // Empty Validation
+    if (
+      name.trim() === "" ||
+      course.trim() === ""
+    ) {
+
+      setError(
+        "All fields are required"
+      );
+
+      return;
+    }
+
+    // Name Length Validation
+    if (name.length < 3) {
+
+      setError(
+        "Name must be at least 3 characters"
+      );
+
+      return;
+    }
+
+    // Course Length Validation
+    if (course.length < 2) {
+
+      setError(
+        "Course name is too short"
+      );
+
+      return;
+    }
+
+    // =====================================
+    // Update Student
+    // =====================================
     if (props.editStudent) {
 
       const updatedStudent = {
@@ -28,7 +85,13 @@ function StudentForm(props) {
 
       props.updateStudent(updatedStudent);
 
-    } else {
+      alert("Student Updated Successfully");
+    }
+
+    // =====================================
+    // Add Student
+    // =====================================
+    else {
 
       const newStudent = {
         id: Date.now(),
@@ -37,8 +100,13 @@ function StudentForm(props) {
       };
 
       props.addStudent(newStudent);
+
+      alert("Student Added Successfully");
     }
 
+    // =====================================
+    // Clear Inputs
+    // =====================================
     setName("");
     setCourse("");
   };
@@ -51,16 +119,45 @@ function StudentForm(props) {
         borderRadius: "12px",
         width: "350px",
         margin: "20px auto",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        boxShadow:
+          "0 2px 10px rgba(0,0,0,0.1)",
       }}
     >
 
-      <h2>
+      <h2
+        style={{
+          textAlign: "center",
+          marginBottom: "20px",
+        }}
+      >
+
         {props.editStudent
           ? "Edit Student"
           : "Add Student"}
+
       </h2>
 
+      {/* =====================================
+          Error Message
+      ===================================== */}
+      {error && (
+
+        <p
+          style={{
+            color: "red",
+            marginBottom: "15px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          {error}
+        </p>
+
+      )}
+
+      {/* =====================================
+          Name Input
+      ===================================== */}
       <input
         type="text"
         placeholder="Enter Name"
@@ -74,9 +171,13 @@ function StudentForm(props) {
           marginBottom: "15px",
           borderRadius: "6px",
           border: "1px solid gray",
+          fontSize: "15px",
         }}
       />
 
+      {/* =====================================
+          Course Input
+      ===================================== */}
       <input
         type="text"
         placeholder="Enter Course"
@@ -90,9 +191,13 @@ function StudentForm(props) {
           marginBottom: "15px",
           borderRadius: "6px",
           border: "1px solid gray",
+          fontSize: "15px",
         }}
       />
 
+      {/* =====================================
+          Submit Button
+      ===================================== */}
       <button
         onClick={handleSubmit}
         style={{
@@ -103,11 +208,15 @@ function StudentForm(props) {
           border: "none",
           borderRadius: "6px",
           fontWeight: "bold",
+          cursor: "pointer",
+          fontSize: "16px",
         }}
       >
+
         {props.editStudent
           ? "Update Student"
           : "Add Student"}
+
       </button>
 
     </div>
