@@ -2,14 +2,12 @@ import { useState, useEffect } from "react";
 
 import StudentForm from "./StudentForm";
 import StudentList from "./StudentList";
+import StudentProfile from "./StudentProfile";
 
 function Dashboard() {
 
-  // =====================================
-  // Load Students from localStorage
-  // =====================================
+  // Load Students
   const [students, setStudents] = useState(() => {
-
     const savedStudents =
       localStorage.getItem("students");
 
@@ -18,43 +16,35 @@ function Dashboard() {
       : [];
   });
 
-  // =====================================
-  // Search State
-  // =====================================
+  // Search
   const [search, setSearch] = useState("");
 
-  // =====================================
-  // Edit Student State
-  // =====================================
+  // Edit Student
   const [editStudent, setEditStudent] =
     useState(null);
 
-  // =====================================
-  // Save Students to localStorage
-  // =====================================
-  useEffect(() => {
+  // View Student Profile
+  const [selectedStudent,
+    setSelectedStudent] =
+    useState(null);
 
+  // Save to Local Storage
+  useEffect(() => {
     localStorage.setItem(
       "students",
       JSON.stringify(students)
     );
-
   }, [students]);
 
-  // =====================================
   // Add Student
-  // =====================================
   const addStudent = (student) => {
-
     setStudents((prevStudents) => [
       ...prevStudents,
       student,
     ]);
   };
 
-  // =====================================
   // Delete Student
-  // =====================================
   const deleteStudent = (id) => {
 
     const updatedStudents =
@@ -66,16 +56,13 @@ function Dashboard() {
     setStudents(updatedStudents);
   };
 
-  // =====================================
   // Update Student
-  // =====================================
   const updateStudent = (
     updatedStudent
   ) => {
 
     const updatedList =
       students.map((student) =>
-
         student.id === updatedStudent.id
           ? updatedStudent
           : student
@@ -86,12 +73,9 @@ function Dashboard() {
     setEditStudent(null);
   };
 
-  // =====================================
   // Search Filter
-  // =====================================
   const filteredStudents =
     students.filter((student) =>
-
       student.name
         .toLowerCase()
         .includes(
@@ -99,15 +83,10 @@ function Dashboard() {
         )
     );
 
-  // =====================================
   // Statistics
-  // =====================================
-
-  // Total Students
   const totalStudents =
     students.length;
 
-  // Total Courses
   const totalCourses =
     new Set(
       students.map(
@@ -127,9 +106,7 @@ function Dashboard() {
       }}
     >
 
-      {/* =====================================
-          Dashboard Header
-      ===================================== */}
+      {/* Header */}
       <div
         style={{
           textAlign: "center",
@@ -140,27 +117,25 @@ function Dashboard() {
         <h1
           style={{
             color: "#2563eb",
-            fontSize: "42px",
+            fontSize: "45px",
             marginBottom: "10px",
           }}
         >
-          Student Dashboard
+          🎓 Student Management Dashboard
         </h1>
 
         <p
           style={{
-            color: "gray",
+            color: "#6b7280",
             fontSize: "18px",
           }}
         >
-          Manage students easily using React
+          Add, Search, Edit and Manage Students
         </p>
 
       </div>
 
-      {/* =====================================
-          Statistics Cards
-      ===================================== */}
+      {/* Statistics */}
       <div
         style={{
           display: "flex",
@@ -175,7 +150,7 @@ function Dashboard() {
         <div
           style={{
             background:
-              "linear-gradient(135deg, #2563eb, #1d4ed8)",
+              "linear-gradient(135deg,#2563eb,#1d4ed8)",
             color: "white",
             width: "240px",
             padding: "25px",
@@ -185,31 +160,15 @@ function Dashboard() {
               "0 4px 15px rgba(0,0,0,0.15)",
           }}
         >
-
-          <h2
-            style={{
-              fontSize: "40px",
-              marginBottom: "10px",
-            }}
-          >
-            {totalStudents}
-          </h2>
-
-          <p
-            style={{
-              fontSize: "18px",
-            }}
-          >
-            Total Students
-          </p>
-
+          <h2>{totalStudents}</h2>
+          <p>Total Students</p>
         </div>
 
         {/* Total Courses */}
         <div
           style={{
             background:
-              "linear-gradient(135deg, #16a34a, #15803d)",
+              "linear-gradient(135deg,#16a34a,#15803d)",
             color: "white",
             width: "240px",
             padding: "25px",
@@ -219,31 +178,31 @@ function Dashboard() {
               "0 4px 15px rgba(0,0,0,0.15)",
           }}
         >
+          <h2>{totalCourses}</h2>
+          <p>Total Courses</p>
+        </div>
 
-          <h2
-            style={{
-              fontSize: "40px",
-              marginBottom: "10px",
-            }}
-          >
-            {totalCourses}
-          </h2>
-
-          <p
-            style={{
-              fontSize: "18px",
-            }}
-          >
-            Total Courses
-          </p>
-
+        {/* Search Results */}
+        <div
+          style={{
+            background:
+              "linear-gradient(135deg,#f59e0b,#d97706)",
+            color: "white",
+            width: "240px",
+            padding: "25px",
+            borderRadius: "15px",
+            textAlign: "center",
+            boxShadow:
+              "0 4px 15px rgba(0,0,0,0.15)",
+          }}
+        >
+          <h2>{filteredStudents.length}</h2>
+          <p>Search Results</p>
         </div>
 
       </div>
 
-      {/* =====================================
-          Search Section
-      ===================================== */}
+      {/* Search Bar */}
       <div
         style={{
           textAlign: "center",
@@ -253,42 +212,62 @@ function Dashboard() {
 
         <input
           type="text"
-          placeholder="Search Student..."
+          placeholder="🔍 Search Student..."
           value={search}
           onChange={(e) =>
             setSearch(e.target.value)
           }
           style={{
-            padding: "14px",
-            width: "350px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-            outline: "none",
+            padding: "15px",
+            width: "400px",
+            maxWidth: "90%",
+            borderRadius: "12px",
+            border: "1px solid #ddd",
             fontSize: "16px",
             boxShadow:
-              "0 2px 8px rgba(0,0,0,0.1)",
+              "0 3px 10px rgba(0,0,0,0.08)",
           }}
         />
 
       </div>
 
-      {/* =====================================
-          Student Form
-      ===================================== */}
+      {/* Student Form */}
       <StudentForm
         addStudent={addStudent}
         editStudent={editStudent}
         updateStudent={updateStudent}
       />
 
-      {/* =====================================
-          Student List
-      ===================================== */}
+      {/* Student List */}
       <StudentList
         students={filteredStudents}
         deleteStudent={deleteStudent}
         setEditStudent={setEditStudent}
+        setSelectedStudent={
+          setSelectedStudent
+        }
       />
+
+      {/* Student Profile Modal */}
+      <StudentProfile
+        student={selectedStudent}
+        onClose={() =>
+          setSelectedStudent(null)
+        }
+      />
+
+      {/* Footer */}
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: "50px",
+          color: "gray",
+        }}
+      >
+        <p>
+          Student Management Dashboard © 2026
+        </p>
+      </div>
 
     </div>
   );

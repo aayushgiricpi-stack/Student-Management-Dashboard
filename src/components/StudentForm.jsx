@@ -7,6 +7,9 @@ function StudentForm(props) {
   // =====================================
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   // =====================================
   // Error State
@@ -23,6 +26,9 @@ function StudentForm(props) {
       setName(props.editStudent.name);
 
       setCourse(props.editStudent.course);
+      setEmail(props.editStudent.email || "");
+      setPhone(props.editStudent.phone || "");
+      setAddress(props.editStudent.address || "");
     }
 
   }, [props.editStudent]);
@@ -81,6 +87,9 @@ function StudentForm(props) {
         id: props.editStudent.id,
         name,
         course,
+        email,
+        phone,
+        address,
       };
 
       props.updateStudent(updatedStudent);
@@ -97,6 +106,9 @@ function StudentForm(props) {
         id: Date.now(),
         name,
         course,
+        email,
+        phone,
+        address,
       };
 
       props.addStudent(newStudent);
@@ -109,6 +121,9 @@ function StudentForm(props) {
     // =====================================
     setName("");
     setCourse("");
+    setEmail("");
+    setPhone("");
+    setAddress("");
   };
 
   return (
@@ -184,6 +199,56 @@ function StudentForm(props) {
         value={course}
         onChange={(e) =>
           setCourse(e.target.value)
+        }
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginBottom: "15px",
+          borderRadius: "6px",
+          border: "1px solid gray",
+          fontSize: "15px",
+        }}
+      />
+      <input
+        type="email"
+        placeholder="Enter Email"
+        value={email}
+        onChange={(e) =>
+          setEmail(e.target.value)
+        }
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginBottom: "15px",
+          borderRadius: "6px",
+          border: "1px solid gray",
+          fontSize: "15px",
+        }}
+      />
+
+      <input
+        type="text"
+        placeholder="Enter Phone"
+        value={phone}
+        onChange={(e) =>
+          setPhone(e.target.value)
+        }
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginBottom: "15px",
+          borderRadius: "6px",
+          border: "1px solid gray",
+          fontSize: "15px",
+        }}
+      />
+
+      <input
+        type="text"
+        placeholder="Enter Address"
+        value={address}
+        onChange={(e) =>
+          setAddress(e.target.value)
         }
         style={{
           width: "100%",

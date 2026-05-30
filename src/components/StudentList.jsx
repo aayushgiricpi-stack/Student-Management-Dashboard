@@ -1,12 +1,8 @@
 function StudentList(props) {
 
-  // =====================================
   // Empty State
-  // =====================================
   if (props.students.length === 0) {
-
     return (
-
       <div
         style={{
           textAlign: "center",
@@ -14,108 +10,155 @@ function StudentList(props) {
           color: "gray",
         }}
       >
-
         <h2>No Students Found</h2>
-
-        <p>
-          Add students to display here
-        </p>
-
+        <p>Add students to display here</p>
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        gap: "20px",
-        marginTop: "30px",
-      }}
-    >
+    <div>
 
-      {props.students.map((student) => (
+      {/* Student Count */}
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#2563eb",
+          marginBottom: "20px",
+        }}
+      >
+        Total Students: {props.students.length}
+      </h2>
 
-        <div
-          key={student.id}
-          style={{
-            backgroundColor: "white",
-            width: "280px",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow:
-              "0 4px 12px rgba(0,0,0,0.1)",
-            transition: "0.3s",
-          }}
-        >
+      {/* Student Cards */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
 
-          {/* Student Name */}
-          <h2
+        {props.students.map((student, index) => (
+
+          <div
+            key={student.id}
             style={{
-              color: "#2563eb",
-              marginBottom: "10px",
+              backgroundColor: "white",
+              width: "300px",
+              padding: "20px",
+              borderRadius: "15px",
+              boxShadow:
+                "0 4px 15px rgba(0,0,0,0.1)",
+              textAlign: "center",
             }}
           >
-            {student.name}
-          </h2>
 
-          {/* Course */}
-          <p
-            style={{
-              color: "gray",
-              marginBottom: "20px",
-            }}
-          >
-            {student.course}
-          </p>
-
-          {/* Buttons */}
-          <div>
-
-            {/* Edit */}
-            <button
-              onClick={() =>
-                props.setEditStudent(student)
-              }
+            {/* Student Number */}
+            <p
               style={{
-                padding: "10px 15px",
-                marginRight: "10px",
-                backgroundColor: "#f59e0b",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontWeight: "bold",
+                color: "gray",
+                fontSize: "14px",
               }}
             >
-              Edit
-            </button>
+              Student #{index + 1}
+            </p>
 
-            {/* Delete */}
-            <button
-              onClick={() =>
-                props.deleteStudent(student.id)
-              }
+            {/* Name */}
+            <h2
               style={{
-                padding: "10px 15px",
-                backgroundColor: "#dc2626",
-                color: "white",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontWeight: "bold",
+                color: "#2563eb",
+                marginBottom: "10px",
               }}
             >
-              Delete
-            </button>
+              {student.name}
+            </h2>
+
+            {/* Course */}
+            <p
+              style={{
+                color: "#555",
+                marginBottom: "20px",
+              }}
+            >
+             
+              <p>📚 {student.course}</p>
+
+              <p>📧 {student.email}</p>
+
+              <p>📱 {student.phone}</p>
+            </p>
+
+            {/* Button Group */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+                flexWrap: "wrap",
+              }}
+            >
+
+              {/* View */}
+              <button
+                onClick={() =>
+                  props.setSelectedStudent &&
+                  props.setSelectedStudent(student)
+                }
+                style={{
+                  padding: "10px 15px",
+                  backgroundColor: "#2563eb",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                }}
+              >
+                View
+              </button>
+
+              {/* Edit */}
+              <button
+                onClick={() =>
+                  props.setEditStudent(student)
+                }
+                style={{
+                  padding: "10px 15px",
+                  backgroundColor: "#f59e0b",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                }}
+              >
+                Edit
+              </button>
+
+              {/* Delete */}
+              <button
+                onClick={() =>
+                  props.deleteStudent(student.id)
+                }
+                style={{
+                  padding: "10px 15px",
+                  backgroundColor: "#dc2626",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                }}
+              >
+                Delete
+              </button>
+
+            </div>
 
           </div>
 
-        </div>
+        ))}
 
-      ))}
+      </div>
 
     </div>
   );
